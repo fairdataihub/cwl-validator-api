@@ -38,7 +38,7 @@ waitress = "^2.1.2"
 
 
 # API Client
-requests = "^2.31.0"
+requests = "^2.32.2"
 
 # Database
 
