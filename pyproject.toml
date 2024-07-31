@@ -88,7 +88,7 @@ pygments = "^2.11.1"
 poethepoet = "^0.20.0"
 
 # Jupyter
-jupyter = "^1.0.0"
+# jupyter = "^1.0.0"
 
 # Types
 types-python-dateutil = "^2.8.19.14"
@@ -122,7 +122,6 @@ precommit = ["format", "flake8", "typecheck", "pylint"]
 
 pytest = "pytest -rx -W ignore::DeprecationWarning"
 pytest_with_capture = "pytest -s -W ignore::DeprecationWarning"
-
 
 jupyter = "jupyter notebook"
 
