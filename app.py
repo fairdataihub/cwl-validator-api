@@ -35,7 +35,8 @@ def create_app(config_module=None, loglevel="INFO"):
     cors_origins = [
         "https://staging.codefair.io",
         "https://codefair.io",
-        "*"
+        "http://localhost:3001",
+        "http://localhost:3000"
     ]
     if app.debug:
         cors_origins.extend(["http://localhost:3000", "http://localhost:3001"])
