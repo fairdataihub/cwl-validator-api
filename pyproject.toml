@@ -42,7 +42,6 @@ requests = "^2.31.0"
 
 # Database
 
-
 minilog = "*"
 art = "^6.0"
 jsonschema = "^4.17.3"
