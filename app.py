@@ -35,9 +35,12 @@ def create_app(config_module=None, loglevel="INFO"):
     cors_origins = [
         "https://staging.codefair.io",
         "https://codefair.io",
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "*"
     ]
     if app.debug:
-        cors_origins.extend(["http://localhost:3000"])
+        cors_origins.extend(["http://localhost:3000", "http://localhost:3001"])
 
     # Only allow CORS origin for localhost:3000
     # and any subdomain of azurestaticapps.net/
@@ -46,6 +49,7 @@ def create_app(config_module=None, loglevel="INFO"):
         resources={
             "/*": {
                 "origins": cors_origins,
+                # "origins": "*",
             }
         },
         allow_headers=[
