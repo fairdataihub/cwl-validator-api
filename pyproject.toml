@@ -58,7 +58,7 @@ faker = "^18.11.2"
 python-dotenv = "^1.0.0"
 
 # Formatters
-black = "^23.3.0"
+black = "^24.3.0"
 tomli = "^2.0.1"
 isort = "^5.12.0"
 
