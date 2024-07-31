@@ -56,10 +56,12 @@ class ValidateCWL(Resource):
                 check=True,
             )
             stdout_clean = clean_output(result.stdout)
-            return {"output": stdout_clean}, 200
+            stderr_clean = clean_output(result.stderr)
+            return {"message": "Validation successful", "output": stdout_clean, "error": stderr_clean}, 200
         except subprocess.CalledProcessError as e:
             stdout_clean = clean_output(e.stdout)
-            return {"output": stdout_clean}, 400
+            stderr_clean = clean_output(e.stderr)
+            return {"message": "Validation failed", "output": stdout_clean, "error": stderr_clean}, 400
         except Exception as e:
             print("An unexpected error occurred.")
             print(str(e))
