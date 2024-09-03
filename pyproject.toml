@@ -32,7 +32,7 @@ python = "^3.10"
 
 # Core
 Flask = "^2.3.2"
-Flask-Cors = "^4.0.0"
+Flask-Cors = "^5.0.0"
 flask-restx = "^1.1.0"
 waitress = "^2.1.2"
 
