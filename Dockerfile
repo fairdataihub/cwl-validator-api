@@ -23,6 +23,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install
 
 RUN pip install cwltool
+RUN pip install cffconvert
 
 COPY apis ./apis
 COPY config.py .
