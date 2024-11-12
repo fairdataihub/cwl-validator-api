@@ -36,6 +36,18 @@ class ValidateCWL(Resource):
 
         file_path = api.payload.get('file_path')
 
+        # Validate and sanitize the file_path input
+        if not file_path:
+            return {"message": "Validation Error", "error": "file_path is required"}, 400
+
+        # Prevent path traversal attacks
+        if ".." in file_path or file_path.startswith("/"):
+            return {"message": "Validation Error", "error": "Invalid file path"}, 400
+
+        # Prevent command injection
+        if re.search(r'[;&|]', file_path):
+            return {"message": "Validation Error", "error": "Invalid characters in file path"}, 400
+
         def clean_output(output):
             # Remove ANSI escape codes
             ansi_escape = re.compile(r'\x1B[@-_][0-?]*[ -/]*[@-~]')
@@ -62,8 +74,6 @@ class ValidateCWL(Resource):
             stderr_clean = clean_output(e.stderr)
             return {"message": "Validation failed", "output": stdout_clean, "error": stderr_clean}, 400
         except Exception as e:
-            print("An unexpected error occurred.")
-            print(str(e))
             return {"message": "An unexpected error occurred", "error": str(e)}, 500
 
 
@@ -76,6 +86,19 @@ class ValidateCitation(Resource):
     def post(self):
         """Validate a CITATION.cff file"""
         file_path = api.payload.get('file_path')
+
+        # Validate and sanitize the file_path input
+        if not file_path:
+            return {"message": "Validation Error", "error": "file_path is required"}, 400
+
+        # Prevent path traversal attacks
+        if ".." in file_path or file_path.startswith("/"):
+            return {"message": "Validation Error", "error": "Invalid file path"}, 400
+
+        # Prevent command injection
+        if re.search(r'[;&|]', file_path):
+            return {"message": "Validation Error", "error": "Invalid characters in file path"}, 400
+
         if file_path.startswith("http://") or file_path.startswith("https://"):
             cmd = ["cffconvert", "--validate", "-u", file_path]
         else:
@@ -94,8 +117,8 @@ class ValidateCitation(Resource):
             return {"message": "valid", "output": stdout_clean, "error": stderr_clean}, 200
         except subprocess.CalledProcessError as e:
             stdout_clean = e.stdout
-            stderr_clean = re.search(r'jsonschema.exceptions.ValidationError:.*', e.stderr).group(0) if e.stderr else "Unknown error"
+            match = re.search(r'jsonschema.exceptions.ValidationError:.*', e.stderr)
+            stderr_clean = match.group(0) if match else "Unknown error"
             return {"message": "invalid", "output": stdout_clean, "error": stderr_clean}, 400
         except Exception as e:
-            print(str(e))
             return {"message": "An unexpected error occurred", "error": str(e)}, 500
