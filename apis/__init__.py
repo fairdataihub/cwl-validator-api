@@ -25,7 +25,7 @@ class HelloEverynyan(Resource):
 
 
 
-@api.route("/validate", endpoint="validate")
+@api.route("/validate-cwl", endpoint="validate-cwl")
 class ValidateCWL(Resource):
     """Validate a CWL file"""
     @api.response(200, "Success")
